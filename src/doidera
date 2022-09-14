@@ -1,0 +1,35 @@
+System.out.println("#####- Login as Admin -#####*");
+        System.out.println();
+
+        System.out.print("User: ");
+        userAdm = read.nextLine();
+        System.out.print("Password: ");
+        userPassword = read.nextLine();
+
+
+do {
+
+            // Sistema todo vai dentro desse if aqui
+            if (userAdm.equals(user) && userPassword.equals(password)) {
+                System.out.println("Welcome to The system!");
+                System.out.println();
+
+            } else {
+                System.out.print("Seems like you forgot your credentials. Would you like to reset it? y/n");
+                verify = read.nextLine();
+
+                if (verify.equals("y")) {
+                    System.out.print("Please, type a new user: ");
+                    user = read.nextLine();
+                    System.out.print("Now, type a new password: ");
+                    password = read.nextLine();
+    
+                    System.out.println("Your new user is: " + user + " - " + "Password: " + password);
+
+                } else {
+                    System.out.println("Try again!");
+                }
+                
+            }
+
+        } while (userAdm == user && userPassword == password)
