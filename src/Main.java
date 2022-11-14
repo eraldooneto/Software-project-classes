@@ -5,37 +5,60 @@ import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 
 import enums.ProjectStatus;
 
+
 public class Main {
     
+    public static Scanner read = new Scanner(System.in);
+    public static Password userCredentials = new Password();
+
     public static void main(String[] args) throws ParseException {
         SimpleDateFormat dataFormat = new SimpleDateFormat("dd/mm/yyyy");
-        Scanner read = new Scanner(System.in);
-          
+        Locale.setDefault(Locale.US);  
         List<Project> listProjects = new ArrayList<>();
 		List<Collaborator> listCollaborators = new ArrayList<>();
 
         int select;
-        String userAdm, userPassword;
-
-        String user = "admin";
-        String password = "1234";
-        
-        // login deve ser implementado logo aqui, após isso jogar as informações
-        // Para recuperar a senha, ainda estou pensando.
 
         System.out.println("----------ACADEMIC SYSTEM----------");
-        System.out.print("User: ");
-        userAdm = read.nextLine();
-        System.out.print("Password: ");
-        userPassword = read.nextLine();
+        System.out.print("USER: ");
+        String user = read.nextLine();
+        System.out.print("PASSWORD: ");
+        String password = read.nextLine();
 
-        if (userAdm.equals(user) && userPassword.equals(password)) {
-            System.out.println("Welcome to The system!");
+        while (!user.equals(userCredentials.getUsername()) || !password.equals(userCredentials.getPassword())) {
+			
+			System.out.println("The username or password must be worng. Would you like to redefine your credentials? y/n");
+			
+			char menuChoice = read.nextLine().charAt(0);
+			
+			if (menuChoice == 'n' || menuChoice == 'N') {
+				exitSystem(); 
+				break;
+			} 
+			
+			passwordMenu();
+
+            System.out.println();
+            System.out.println("----------INSERT THE CREDENTIALS----------");
+			
+			System.out.print("USER: ");
+			user = read.nextLine();
+				
+			System.out.print("PASSWORD: ");
+			password = read.nextLine();
+            System.out.println();
+        }
+
+
+       // 👍 Change this piece later 🤦‍♂️
+        if (user.equals(userCredentials.getUsername()) && password.equals(userCredentials.getPassword())) {
+            System.out.println("----------WELCOME TO THE ACADEMIC SYSTEM----------");
             System.out.println();
 
             // Começa aqui a bagaceira 👽
@@ -62,6 +85,9 @@ public class Main {
                         break;
                     
                     case 1:
+                        System.out.println("----------CREATE A NEW PROJECT----------");
+                        System.out.println();
+
                         System.out.print("Please, type the Project's name: ");
                         String title = read.nextLine();
                         read.nextLine();
@@ -119,6 +145,9 @@ public class Main {
                         break;
 
                     case 2:
+                        System.out.println("----------START A PROJECT----------");
+                        System.out.println();
+
                         System.out.print("Please, type the Project's name you want to begin: ");
                         title = read.nextLine();
                         read.nextLine();
@@ -148,7 +177,9 @@ public class Main {
                         break;
                     
                     case 3:
-                    
+                        System.out.println("----------FINISH A PROJECT----------");
+                        System.out.println();
+
                         System.out.print("Please, inform the Project's title to finish: ");
                         title = read.nextLine();
                         read.nextLine();
@@ -181,6 +212,9 @@ public class Main {
                         break;
                     
                     case 4: 
+                        System.out.println("----------ALLOCATE A COLLAORATOR TO A PROJECT----------");
+                        System.out.println();
+
                         System.out.print("Collaborator's data to be allocated: ");
                         participant = setCollaborator(listCollaborators, read);
 
@@ -212,6 +246,9 @@ public class Main {
                         break;
 
                     case 5:
+                        System.out.println("----------CREATE A PUBLICATION----------");
+                        System.out.println();
+
                         System.out.print("Type the Publication's title: ");
                         String publicationTitle = read.nextLine();
                         read.nextLine();
@@ -282,7 +319,10 @@ public class Main {
                         break;
                     
                     
-                    case 6: 
+                    case 6:
+                        System.out.println("----------ORIENTATION AND TASK MANAGEMENT----------");
+                        System.out.println();
+
                         System.out.print("Please, type the orientation's title: ");
                         title = read.nextLine();
                         read.nextLine();
@@ -361,6 +401,9 @@ public class Main {
                         break;
 
                     case 7: 
+                        System.out.println("----------CONSULT A COLLABORATOR----------");
+                        System.out.println();
+                        
                         System.out.print("Type the Collaborator's name to query: ");
                         String name = read.next();
 
@@ -389,6 +432,9 @@ public class Main {
                         break;
                     
                     case 8:
+                        System.out.println("----------CONSULT A PROJECT----------");
+                        System.out.println();
+                        
                         System.out.print("Type the Project's name to query: ");
                         title = read.nextLine();
 
@@ -414,14 +460,17 @@ public class Main {
                         break;
                     
                     case 9:
+                        System.out.println("----------GENERAL REPORT----------");
+                        System.out.println();
+
                         int inProgressProject = 0;
                         int inElaborationProject = 0;
                         int endedProjects = 0;
                         int publicationsNumber = 0;
                         int orientationsNumber = 0; 
 
-                        System.out.println("-------GENERAL REPORT-------");
-                        System.out.println();
+                        //System.out.println("-------GENERAL REPORT-------");
+                        //System.out.println();
                         System.out.println("Number of Collaborators: " + listCollaborators.size());
 
                         for (Project p : listProjects) {
@@ -470,7 +519,8 @@ public class Main {
             } while (select != 0);
 
         } else {
-            System.out.print("Seems like you forgot your credentials. Try again later.");
+            //System.out.print("Seems like you forgot your credentials. Try again later.");
+            System.out.println("See you later!");
         }
 
         read.close();
@@ -542,6 +592,31 @@ public class Main {
         return participant;
     }
 
+    public static void passwordMenu() {
+		
+		System.out.print("New Username: ");
+
+		String newUsername = read.nextLine();
+		changeUsername(newUsername);
+
+		System.out.print("New Password: ");
+		String newPassword = read.nextLine();
+		changePassword(newPassword);	
+		
+	}
+	
+	public static void changeUsername(String newUser) {
+		userCredentials.setUsername(newUser);
+	}
+	
+	public static void changePassword(String newPassword) {
+		userCredentials.setPassword(newPassword);
+	}
+	
+	public static void exitSystem() {
+		System.out.println("Try again later.");
+	}
+
     public static Collaborator LookForCollaborator(List<Collaborator> listCollaborators, String name) {
         for (Collaborator collaborator : listCollaborators) {
             if(name.equals(collaborator.getCollaboratorName())) {
@@ -563,6 +638,3 @@ public class Main {
     }
 
 }
-
-
-
