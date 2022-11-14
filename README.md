@@ -19,6 +19,8 @@ Mas, caso queira recuperar o seu acesso, basta seguir o passo a passo para criar
 
 ## Funcionalidades Implementadas 
 
+⚠️ Algumas funcionalidades estão inclusas dentro de outras, para maior organização. 
+
 1. Criar um novo projeto: ✅
  - É possível criar um projeto de acordo com os seus atributos (nome, data inicial, data final, coordenador, agência de financiamento, descrição do projeto, valor da bolsa e colaboradores).
 2. Iniciar um projeto: ✅
